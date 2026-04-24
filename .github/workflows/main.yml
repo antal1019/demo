@@ -9,10 +9,16 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     strategy:
       matrix:
         java-version: [17, 21]
     steps:
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#github-workflow"
       - uses: actions/checkout@v3
       - name: Set up JDK 17,21
         uses: actions/setup-java@v3
@@ -41,9 +47,15 @@ jobs:
           step: save
       - name: Job Fail
         if: failure()
-        run: echo "Build or tests failed!"
+        run: echo "Build or tests failesd!"
       - name: Success
         run: echo "Package successful!"
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#github-workflow"
+        if: always()
   deploy:
     needs: build_and_test
     runs-on: ubuntu-latest
@@ -51,4 +63,9 @@ jobs:
     steps:
       - name: Deploy to production
         run: echo "Deploying to production..."
-      
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: "#github-workflow"
+        if: always()
