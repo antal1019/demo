@@ -21,13 +21,13 @@ jobs:
         with:
           step: restore
       - name: Compile with Maven
-        run: mvn compile
+        run: $MAVEN compile
       - name: Run tests with Maven
-        run: mvn test
+        run: $MAVEN test
       - name: Success
         run: echo "Build and tests successful!"
-      - name: Runs mvn package
-        run: mvn package
+      - name: Runs $MAVEN package
+        run: $MAVEN package
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
