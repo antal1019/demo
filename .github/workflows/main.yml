@@ -9,36 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-        name: Set up JDK 21
-      - uses: actions/setup-java@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
         with:
           java-version: "21"
           distribution: "temurin"
-
-        name: Compile with Maven
+      - name: Compile with Maven
         run: mvn compile
-
-        name: Run tests with Maven
+      - name: Run tests with Maven
         run: mvn test
-
-        name: Success
+      - name: Success
         run: echo "Build and tests successful!"
 
   package:
     runs-on: ubuntu-latest
     needs: build_and_test
-
     steps:
-
       - uses: actions/checkout@v3
-
-        name: Runs mvn package
+      - name: Runs mvn package
         run: mvn package
-
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-
-        name: Success
+          path: target
+      - name: Success
         run: echo "Package successful!"
