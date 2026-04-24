@@ -37,7 +37,7 @@ jobs:
         with:
           step: save
       - name: Job Fail
-        if: build_and_test.result == 'failure'
+        if: jobs.build_and_test == 'failure'
         run: echo "Build or tests failed!"
       - name: Success
         run: echo "Package successful!"
