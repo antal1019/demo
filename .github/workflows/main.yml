@@ -44,3 +44,11 @@ jobs:
         run: echo "Build or tests failed!"
       - name: Success
         run: echo "Package successful!"
+  deploy:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to production
+        run: echo "Deploying to production..."
+      
