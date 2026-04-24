@@ -33,7 +33,7 @@ jobs:
       - name: Runs mvn package
         run: mvn package
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v6
         with:
           name: my-artifact
 
