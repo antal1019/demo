@@ -24,12 +24,12 @@ jobs:
         with:
           step: restore
       - name: Compile with Maven
-        run: mvn compile
+        run: mvn compile -Djava.version=${{ matrix.java-version }}
       - name: Run tests with Maven
-        run: mvn test
+        run: mvn test -Djava.version=${{ matrix.java-version }}
       - name: Success
         run: echo "Build and tests successful!"
-      - name: Runs mvn package
+      - name: Runs mvn package -Djava.version=${{ matrix.java-version }}
         run: mvn package
       - uses: actions/upload-artifact@v4
         with:
