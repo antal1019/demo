@@ -21,13 +21,13 @@ jobs:
         with:
           step: restore
       - name: Compile with Maven
-        run: $MAVEN compile
+        run: mvn compile
       - name: Run tests with Maven
-        run: $MAVEN test
+        run: mvn test
       - name: Success
         run: echo "Build and tests successful!"
-      - name: Runs $MAVEN package
-        run: $MAVEN package
+      - name: Runs mvn package
+        run: mvn package
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
@@ -36,5 +36,8 @@ jobs:
         uses: skjolber/maven-cache-github-action@v3.1.1
         with:
           step: save
+      - name: Job Fail
+        if: build_and_test.result == 'failure'
+        run: echo "Build or tests failed!"
       - name: Success
         run: echo "Package successful!"
