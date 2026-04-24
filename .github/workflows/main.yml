@@ -3,6 +3,8 @@ name: Maven CI/CD Pipeline
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build_and_test:
@@ -14,6 +16,10 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
+      - name: Restore Maven cache
+        uses: skjolber/maven-cache-github-action@v3.1.1
+        with:
+          step: restore
       - name: Compile with Maven
         run: mvn compile
       - name: Run tests with Maven
@@ -26,5 +32,9 @@ jobs:
         with:
           name: my-artifact
           path: target/*.jar
+      - name: Save Maven cache
+        uses: skjolber/maven-cache-github-action@v3.1.1
+        with:
+          step: save
       - name: Success
         run: echo "Package successful!"
