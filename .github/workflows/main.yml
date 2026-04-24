@@ -25,7 +25,7 @@ jobs:
       - name: Run tests with Maven
         run: mvn test
       - name: Success
-        run: echo "Build and tests successful!"
+        run: echoo "Build and tests successful!"
       - name: Runs mvn package
         run: mvn package
       - uses: actions/upload-artifact@v4
