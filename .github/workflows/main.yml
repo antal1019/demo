@@ -9,12 +9,15 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [8, 11, 17, 21]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 21
+      - name: Set up JDK 8,11,17,21
         uses: actions/setup-java@v3
         with:
-          java-version: "21"
+          java-version: ${{ matrix.java-version }}
           distribution: "temurin"
       - name: Restore Maven cache
         uses: skjolber/maven-cache-github-action@v3.1.1
@@ -25,7 +28,7 @@ jobs:
       - name: Run tests with Maven
         run: mvn test
       - name: Success
-        run: echoo "Build and tests successful!"
+        run: echo "Build and tests successful!"
       - name: Runs mvn package
         run: mvn package
       - uses: actions/upload-artifact@v4
