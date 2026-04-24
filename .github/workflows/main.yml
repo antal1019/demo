@@ -24,16 +24,16 @@ jobs:
         with:
           step: restore
       - name: Compile with Maven
-        run: mvn compile -Djava.version=${{ matrix.java-version }}
+        run: mvn compile
       - name: Run tests with Maven
-        run: mvn test -Djava.version=${{ matrix.java-version }}
+        run: mvn test
       - name: Success
         run: echo "Build and tests successful!"
-      - name: Runs mvn package -Djava.version=${{ matrix.java-version }}
+      - name: Runs mvn package
         run: mvn package
       - uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
+          name: my-artifact-${{ matrix.java-version }}
           path: target/*.jar
       - name: Save Maven cache
         uses: skjolber/maven-cache-github-action@v3.1.1
