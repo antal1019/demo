@@ -16,13 +16,13 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      - name: Compile with Maven
+        name: Compile with Maven
         run: mvn compile
 
-      - name: Run tests with Maven
+        name: Run tests with Maven
         run: mvn test
 
-      - name: Success
+        name: Success
         run: echo "Build and tests successful!"
 
   package:
@@ -30,12 +30,15 @@ jobs:
     needs: build_and_test
 
     steps:
-      - name: Runs mvn package
+
+      - uses: actions/checkout@v3
+
+        name: Runs mvn package
         run: mvn package
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
 
-      - name: Success
+        name: Success
         run: echo "Package successful!"
